@@ -37,10 +37,8 @@ if (input === "my-tweets") {
             return console.log('Error occurred: ' + err);
         }
         // console.log(data.tracks.items[0]);
-        for (var j=0; j<20; j++) {
-            console.log("Artist Name: "+ data.tracks.items[j].album.artists[j].name);
-            console.log("Song Name: " + data.tracks.items[j].name);
-        }
+        console.log("Artist Name: "+ data.tracks.items[0].artists[0].name);
+        console.log("Song Name: " + data.tracks.items[0].name);
     });
 } else if (input === "movie-this") {
     console.log("movies");
@@ -49,3 +47,12 @@ if (input === "my-tweets") {
 } else {
     console.log("Please use the correct command. ('my-tweets', 'spotify-this-song', 'movie-this', 'do-what-it-says')")
 }
+
+
+[ { external_urls:
+    { spotify: 'https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of' },
+    href: 'https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of',
+    id: '0LyfQWJT6nXafLPZqxe9Of',
+    name: 'Various Artists',
+    type: 'artist',
+    uri: 'spotify:artist:0LyfQWJT6nXafLPZqxe9Of' } ]
