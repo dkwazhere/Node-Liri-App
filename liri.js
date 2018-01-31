@@ -36,9 +36,11 @@ if (input === "my-tweets") {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        // console.log(data.tracks.items[0]);
+        // console.log(data.tracks.items[0])
         console.log("Artist Name: "+ data.tracks.items[0].artists[0].name);
         console.log("Song Name: " + data.tracks.items[0].name);
+        console.log("Album name: " + data.tracks.items[0].album.name);
+        console.log("URL for song: " + data.tracks.items[0].external_urls.spotify);
     });
 } else if (input === "movie-this") {
     console.log("movies");
