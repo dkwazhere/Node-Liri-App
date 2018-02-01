@@ -20,8 +20,8 @@ var spotify = new Spotify({
   secret: process.env.SPOTIFY_SECRET
 });
 
-// User commands conditionals.
-if (input === "my-tweets") {
+// Functions
+function tweets() {
     var params = {screen_name: 'TheNotoriousMMA'};
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
       if (!error) {
@@ -31,17 +31,28 @@ if (input === "my-tweets") {
         }
       }
     });
-} else if (input === "spotify-this-song") {
+}
+function spotify() {
     spotify.search({ type: 'track', query: process.argv[3] }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
         }
-        // console.log(data.tracks.items[0])
         console.log("Artist Name: "+ data.tracks.items[0].artists[0].name);
         console.log("Song Name: " + data.tracks.items[0].name);
         console.log("Album name: " + data.tracks.items[0].album.name);
         console.log("URL for song: " + data.tracks.items[0].external_urls.spotify);
     });
+}
+
+function omdb() {
+
+}
+
+// User commands conditionals.
+if (input === "my-tweets") {
+    tweets();
+} else if (input === "spotify-this-song") {
+    spotify();
 } else if (input === "movie-this") {
     console.log("movies");
 } else if (input === "do-what-it-says") {
@@ -49,12 +60,3 @@ if (input === "my-tweets") {
 } else {
     console.log("Please use the correct command. ('my-tweets', 'spotify-this-song', 'movie-this', 'do-what-it-says')")
 }
-
-
-[ { external_urls:
-    { spotify: 'https://open.spotify.com/artist/0LyfQWJT6nXafLPZqxe9Of' },
-    href: 'https://api.spotify.com/v1/artists/0LyfQWJT6nXafLPZqxe9Of',
-    id: '0LyfQWJT6nXafLPZqxe9Of',
-    name: 'Various Artists',
-    type: 'artist',
-    uri: 'spotify:artist:0LyfQWJT6nXafLPZqxe9Of' } ]
