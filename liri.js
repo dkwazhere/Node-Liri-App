@@ -49,18 +49,15 @@ var request = require("request");
 var movie = process.argv[3];
 request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", function(error, response, body) {
     if (!error && response.statusCode === 200) {
-        console.log("The movie's title is: " + JSON.parse(body).Title);
-        console.log("The movie's release date: " + JSON.parse(body).Released);
-        console.log("The movie's rating is: " + JSON.parse(body).imdbRating);
-        console.log("The movie's country of production is: " + JSON.parse(body).Country);
+        console.log("Title: " + JSON.parse(body).Title);
+        console.log("Release date: " + JSON.parse(body).Released);
+        console.log("imdb Rating: " + JSON.parse(body).imdbRating);
+        console.log(JSON.parse(body).Ratings[1].Source + " Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Country of production is: " + JSON.parse(body).Country);
         console.log("Languages: " + JSON.parse(body).Language);
         console.log("Plot: " + JSON.parse(body).Plot);
-        console.log("Plot: " + JSON.parse(body).Actors);
+        console.log("Actors: " + JSON.parse(body).Actors);
     }
-// console.log(JSON.parse(body).Released);
-// console.log(JSON.parse(body).Ratings[1].Source[0].Value);
-
-
 });
 }
 
