@@ -8,7 +8,7 @@ var input = process.argv[2];
 
 // Functions
 function tweets() {
-    var params = {screen_name: 'TheNotoriousMMA'};
+    var params = {screen_name: process.argv[3]};
     var client = new Twitter({
       consumer_key: process.env.TWITTER_CONSUMER_KEY,
       consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
@@ -17,11 +17,27 @@ function tweets() {
     });
     client.get('statuses/user_timeline', params, function(error, tweets, response) {
       if (!error) {
-        console.log(tweets);
-        for (var i=0; i<20; i++) {
-            console.log(tweets[i].text)
+          for (var i=0; i<20; i++) {
+              console.log(tweets[i].text);
+          }
+     }
+    });
+}
+
+function tweetsNull() {
+    var params = {screen_name: "thenotoriousMMA"};
+    var client = new Twitter({
+      consumer_key: process.env.TWITTER_CONSUMER_KEY,
+      consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+      access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+      access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+    });
+    client.get('statuses/user_timeline', params, function(error, tweets, response) {
+      if (!error) {
+          for (var i=0; i<20; i++) {
+            console.log(tweets[i].text);
         }
-      }
+     }
     });
 }
 
@@ -66,7 +82,7 @@ request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", 
         console.log("Title: " + JSON.parse(body).Title);
         console.log("Release date: " + JSON.parse(body).Released);
         console.log("imdb Rating: " + JSON.parse(body).imdbRating);
-        console.log(JSON.parse(body).Ratings[1].Source + " Rating: " + JSON.parse(body).Ratings[1].Value);
+        console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
         console.log("Country of production is: " + JSON.parse(body).Country);
         console.log("Languages: " + JSON.parse(body).Language);
         console.log("Plot: " + JSON.parse(body).Plot);
@@ -94,7 +110,11 @@ request("http://www.omdbapi.com/?t=Mr.Nobody&y=&plot=short&apikey=trilogy", func
 
 // User commands conditionals.
 if (input === "my-tweets") {
-    tweets();
+    if (process.argv[3] === undefined) {
+        tweetsNull();
+    } else {
+        console.log("Please add a user name after 'my-tweets'");
+    }
 } else if (input === "spotify-this-song") {
     if (process.argv[3] === undefined) {
         spotifyNull();
