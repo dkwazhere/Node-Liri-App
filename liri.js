@@ -22,7 +22,7 @@ function tweets() {
           }
      }
     });
-}
+};
 
 function tweetsNull() {
     var params = {screen_name: "thenotoriousMMA"};
@@ -39,7 +39,7 @@ function tweetsNull() {
         }
      }
     });
-}
+};
 
 function spotify() {
     var spotify = new Spotify({
@@ -56,7 +56,8 @@ function spotify() {
             console.log("URL for song: " + data.tracks.items[0].external_urls.spotify);
         }
     });
-}
+};
+
 function spotifyNull() {
     var spotify = new Spotify({
       id: process.env.SPOTIFY_ID,
@@ -72,7 +73,7 @@ function spotifyNull() {
             console.log("URL for song: " + data.tracks.items[5].external_urls.spotify);
         }
     });
-}
+};
 
 function omdb() {
 var request = require("request");
@@ -89,7 +90,7 @@ request("http://www.omdbapi.com/?t=" + movie + "&y=&plot=short&apikey=trilogy", 
         console.log("Actors: " + JSON.parse(body).Actors);
     }
 });
-}
+};
 
 function omdbNull() {
 var request = require("request");
@@ -106,14 +107,39 @@ request("http://www.omdbapi.com/?t=Mr.Nobody&y=&plot=short&apikey=trilogy", func
         console.log("Actors: " + JSON.parse(body).Actors);
     }
 });
-}
+};
+
+function doWhatItSays() {
+        var fs = require("fs");
+        fs.readFile("random.txt", "utf8", function(error, data) {
+            if (error) {
+                return console.log(error);
+            } else {
+                console.log(data);
+                var spotify = new Spotify({
+                  id: process.env.SPOTIFY_ID,
+                  secret: process.env.SPOTIFY_SECRET
+                  });
+                spotify.search({ type: 'track', query: 'I want it that way' }, function(err, data) {
+                    if (err) {
+                        return console.log('Error occurred: ' + err);
+                    } else {
+                        console.log("Artist Name: "+ data.tracks.items[0].artists[0].name);
+                        console.log("Song Name: " + data.tracks.items[0].name);
+                        console.log("Album name: " + data.tracks.items[0].album.name);
+                        console.log("URL for song: " + data.tracks.items[0].external_urls.spotify);
+                    }
+                });
+            }
+        })
+};
 
 // User commands conditionals.
 if (input === "my-tweets") {
     if (process.argv[3] === undefined) {
         tweetsNull();
     } else {
-        console.log("Please add a user name after 'my-tweets'");
+        tweets();
     }
 } else if (input === "spotify-this-song") {
     if (process.argv[3] === undefined) {
@@ -128,7 +154,7 @@ if (input === "my-tweets") {
         omdb();
     }
 } else if (input === "do-what-it-says") {
-    console.log("I-want-it-that-way");
+    doWhatItSays();
 } else {
     console.log("Please use the correct command. ('my-tweets', 'spotify-this-song', 'movie-this', 'do-what-it-says')")
 }
